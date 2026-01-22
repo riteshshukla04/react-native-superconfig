@@ -1,0 +1,138 @@
+#!/usr/bin/env node
+
+/**
+ * This script reads the .env file from the app root
+ * (where the user's project is, not inside node_modules)
+ * and generates the configGetter.hpp file with the values
+ * from the .env file as the config map.
+ * 
+ * When installed as a dependency:
+ *   App Root/
+ *   ├── .env                    <- reads from here
+ *   └── node_modules/
+ *       └── superconfig/
+ *           └── cpp/
+ *               └── configGetter.hpp  <- outputs here
+ */
+
+const fs = require('fs');
+const path = require('path');
+
+// Library root (where this script is located)
+const libraryRoot = path.resolve(__dirname, '..');
+
+// Find app root by looking for parent of node_modules
+// This handles both local development and when installed as a package
+function findAppRoot() {
+    let currentDir = libraryRoot;
+
+    // Walk up the directory tree to find the app root
+    while (currentDir !== path.dirname(currentDir)) {
+        // Check if we're inside node_modules
+        if (path.basename(path.dirname(currentDir)) === 'node_modules') {
+            // App root is the parent of node_modules
+            return path.dirname(path.dirname(currentDir));
+        }
+        currentDir = path.dirname(currentDir);
+    }
+
+    // Fallback for local development (when library is not in node_modules)
+    // In this case, look for .env in the sibling "example" folder or library root
+    const exampleEnv = path.join(libraryRoot, '..', 'example', '.env');
+    if (fs.existsSync(exampleEnv)) {
+        return path.join(libraryRoot, '..', 'example');
+    }
+
+    // Last fallback: use library root itself
+    return libraryRoot;
+}
+
+// Paths
+const appRoot = findAppRoot();
+const envPath = path.join(appRoot, '.env');
+const outputPath = path.join(libraryRoot, 'cpp', 'configGetter.hpp');
+
+console.log('[Superconfig] 🔧 Generating config...');
+console.log('  App root:', appRoot);
+console.log('  .env path:', envPath);
+console.log('  Output path:', outputPath);
+
+/**
+ * Parse a .env file and return key-value pairs
+ */
+function parseEnvFile(filePath) {
+    if (!fs.existsSync(filePath)) {
+        console.warn(`[Superconfig] ⚠️  .env file not found at ${filePath}`);
+        console.warn('[Superconfig] ⚠️  Using empty config. Create a .env file in your app root.');
+        return {};
+    }
+
+    const content = fs.readFileSync(filePath, 'utf-8');
+    const config = {};
+
+    content.split('\n').forEach((line) => {
+        // Skip empty lines and comments
+        const trimmedLine = line.trim();
+        if (!trimmedLine || trimmedLine.startsWith('#')) {
+            return;
+        }
+
+        // Parse key=value
+        const equalIndex = trimmedLine.indexOf('=');
+        if (equalIndex > 0) {
+            const key = trimmedLine.substring(0, equalIndex).trim();
+            let value = trimmedLine.substring(equalIndex + 1).trim();
+
+            // Strip surrounding quotes (single or double)
+            if ((value.startsWith('"') && value.endsWith('"')) ||
+                (value.startsWith("'") && value.endsWith("'"))) {
+                value = value.substring(1, value.length - 1);
+            }
+
+            config[key] = value;
+        }
+    });
+
+    return config;
+}
+
+/**
+ * Generate the C++ header file content
+ */
+function generateCppHeader(config) {
+    const entries = Object.entries(config);
+
+    let mapEntries = '';
+    if (entries.length > 0) {
+        mapEntries = entries
+            .map(([key, value]) => `        {"${key}", "${value}"}`)
+            .join(',\n');
+    }
+
+    return `//
+//  configGetter.hpp
+//  Pods
+//
+//  Auto-generated from .env file - DO NOT EDIT MANUALLY
+//
+
+#pragma once
+#include <unordered_map>
+#include <string>
+
+inline std::unordered_map<std::string, std::string> getActualConfig() {
+    return {
+${mapEntries}
+    };
+}
+`;
+}
+
+// Main execution
+const config = parseEnvFile(envPath);
+console.log(`[Superconfig] 📦 Found ${Object.keys(config).length} config entries`);
+
+
+const cppContent = generateCppHeader(config);
+fs.writeFileSync(outputPath, cppContent, 'utf-8');
+console.log('[Superconfig] ✅ Generated configGetter.hpp');

@@ -1,0 +1,105 @@
+{
+  "lockfileVersion": 1,
+  "packages": {
+    "@babel/core": {
+      "version": "^7.25.2",
+      "integrated": false
+    },
+    "@babel/preset-env": {
+      "version": "^7.25.3",
+      "integrated": false
+    },
+    "@babel/runtime": {
+      "version": "^7.25.0",
+      "integrated": false
+    },
+    "@react-native-community/cli": {
+      "version": "20.0.0",
+      "integrated": false
+    },
+    "@react-native-community/cli-platform-android": {
+      "version": "20.0.0",
+      "integrated": false
+    },
+    "@react-native-community/cli-platform-ios": {
+      "version": "20.0.0",
+      "integrated": false
+    },
+    "@react-native/babel-preset": {
+      "version": "0.83.1",
+      "integrated": false
+    },
+    "@react-native/eslint-config": {
+      "version": "0.83.1",
+      "integrated": false
+    },
+    "@react-native/metro-config": {
+      "version": "0.83.1",
+      "integrated": false
+    },
+    "@react-native/new-app-screen": {
+      "version": "0.83.1",
+      "integrated": false
+    },
+    "@react-native/typescript-config": {
+      "version": "0.83.1",
+      "integrated": false
+    },
+    "@types/jest": {
+      "version": "^29.5.13",
+      "integrated": false
+    },
+    "@types/react": {
+      "version": "^19.2.0",
+      "integrated": false
+    },
+    "@types/react-test-renderer": {
+      "version": "^19.1.0",
+      "integrated": false
+    },
+    "eslint": {
+      "version": "^8.19.0",
+      "integrated": false
+    },
+    "jest": {
+      "version": "^29.6.3",
+      "integrated": false
+    },
+    "prettier": {
+      "version": "2.8.8",
+      "integrated": false
+    },
+    "react": {
+      "version": "19.2.0",
+      "integrated": false
+    },
+    "react-native": {
+      "version": "0.83.1",
+      "integrated": false
+    },
+    "react-native-config": {
+      "version": "^1.6.1",
+      "integrated": true
+    },
+    "react-native-nitro-modules": {
+      "version": "^0.33.2",
+      "integrated": false
+    },
+    "react-native-safe-area-context": {
+      "version": "^5.5.2",
+      "integrated": false
+    },
+    "react-test-renderer": {
+      "version": "19.2.0",
+      "integrated": false
+    },
+    "superconfig": {
+      "version": "../superconfig",
+      "integrated": false
+    },
+    "typescript": {
+      "version": "^5.8.3",
+      "integrated": false
+    }
+  }
+}

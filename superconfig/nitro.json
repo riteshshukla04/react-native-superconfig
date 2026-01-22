@@ -1,0 +1,23 @@
+{
+  "$schema": "https://nitro.margelo.com/nitro.schema.json",
+  "cxxNamespace": [
+    "superconfig"
+  ],
+  "ios": {
+    "iosModuleName": "NitroSuperconfig"
+  },
+  "android": {
+    "androidNamespace": [
+      "superconfig"
+    ],
+    "androidCxxLibName": "NitroSuperconfig"
+  },
+  "autolinking": {
+    "Config": {
+      "cpp": "HybridConfig"
+    }
+  },
+  "ignorePaths": [
+    "**/node_modules"
+  ]
+}
