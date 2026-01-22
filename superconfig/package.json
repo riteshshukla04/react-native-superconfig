@@ -35,7 +35,8 @@
     "typescript": "tsc",
     "specs": "tsc --noEmit false && nitrogen --logLevel=\"debug\"",
     "generate-config": "node scripts/generate-config.js",
-    "prepare": "node scripts/generate-config.js"
+    "prepare": "node scripts/generate-config.js",
+    "release": "release-it"
   },
   "keywords": [
     "react-native",
@@ -65,6 +66,7 @@
     "react": "19.2.0",
     "react-native": "0.83.0",
     "react-native-nitro-modules": "*",
+    "release-it": "^19.2.4",
     "typescript": "^5.8.3"
   },
   "peerDependencies": {
