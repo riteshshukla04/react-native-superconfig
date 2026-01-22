@@ -44,14 +44,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mrousavy/nitro.git"
+    "url": "git+https://github.com/riteshshukla04/react-native-superconfig.git"
   },
-  "author": "Marc Rousavy <me@mrousavy.com> (https://github.com/mrousavy)",
+  "author": "Ritesh Shukla <riteshshukla2381@gmail.com> (https://github.com/riteshshukla04)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mrousavy/nitro/issues"
+    "url": "https://github.com/riteshshukla04/react-native-superconfig/issues"
   },
-  "homepage": "https://github.com/mrousavy/nitro#readme",
+  "homepage": "https://github.com/riteshshukla04/react-native-superconfig#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/"
   },
