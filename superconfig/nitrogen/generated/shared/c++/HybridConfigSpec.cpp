@@ -14,7 +14,8 @@ namespace margelo::nitro::superconfig {
     HybridObject::loadHybridMethods();
     // load custom methods/properties
     registerHybrids(this, [](Prototype& prototype) {
-      prototype.registerHybridMethod("getConfig", &HybridConfigSpec::getConfig);
+      prototype.registerHybridGetter("Config", &HybridConfigSpec::getConfig);
+      prototype.registerHybridSetter("Config", &HybridConfigSpec::setConfig);
     });
   }
 

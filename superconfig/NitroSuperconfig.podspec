@@ -13,9 +13,12 @@ Pod::Spec.new do |s|
   s.platforms    = { :ios => min_ios_version_supported, :visionos => 1.0 }
   s.source       = { :git => "https://github.com/mrousavy/nitro.git", :tag => "#{s.version}" }
 
-  # Generate configGetter.hpp from .env file during pod install
-  s.prepare_command = "node scripts/generate-config.js"
-  Pod::UI.puts "[Superconfig] 🔧 Generated config from .env file!"
+  # Generate configGetter.hpp from .env file before each build
+  s.script_phase = {
+    :name => 'Generate Superconfig',
+    :script => 'bash "${PODS_TARGET_SRCROOT}/scripts/generate-config.sh"',
+    :execution_position => :before_compile
+  }
 
   s.source_files = [
     # Implementation (Swift)

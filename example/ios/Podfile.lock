@@ -37,7 +37,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - NitroSuperconfig (0.0.1):
+  - NitroSuperconfig (0.0.3):
     - boost
     - DoubleConversion
     - fast_float
@@ -2891,7 +2891,7 @@ SPEC CHECKSUMS:
   glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
   hermes-engine: 2fdeff540c9a6172fb19e8bee2d3df3ccb3c7846
   NitroModules: 11bba9d065af151eae51e38a6425e04c3b223ff3
-  NitroSuperconfig: d049ac5c55ef02de7fccfc5016bac8de09cb216d
+  NitroSuperconfig: 8a89cadf0ca22964a91b039ea4e2c6fb28a23c97
   RCT-Folly: 846fda9475e61ec7bcbf8a3fe81edfcaeb090669
   RCTDeprecation: a41bbdd9af30bf2e5715796b313e44ec43eefff1
   RCTRequired: 7be34aabb0b77c3cefe644528df0fa0afad4e4d0

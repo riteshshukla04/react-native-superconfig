@@ -6,15 +6,15 @@ import { NitroModules, type HybridObject } from 'react-native-nitro-modules'
 
 
 export interface Config extends HybridObject<{ android: 'c++', ios: 'c++' }> {
-    getConfig(): Record<string, string>
+    Config: Record<string, string>
 }
 const nitroConfig = NitroModules.createHybridObject<Config>("Config")
 
 
-let Config:Record<string, string>= {}
+let Config:Record<string, string> | undefined = undefined
 
-if(!Object.keys(Config).length){
-    Config = nitroConfig.getConfig()
+if(!Config){
+    Config = nitroConfig.Config as Record<string, string>
 }
 
 export default Config

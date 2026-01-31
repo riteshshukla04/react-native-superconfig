@@ -12,6 +12,8 @@ namespace margelo::nitro::superconfig {
     public:
         HybridConfig():HybridObject(TAG){};
         std::unordered_map<std::string, std::string> getConfig() override;
+        void setConfig(const std::unordered_map<std::string, std::string>& Config) override;
+
 
 
     };

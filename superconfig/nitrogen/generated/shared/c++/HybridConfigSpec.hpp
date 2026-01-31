@@ -45,11 +45,12 @@ namespace margelo::nitro::superconfig {
 
     public:
       // Properties
-      
+      virtual std::unordered_map<std::string, std::string> getConfig() = 0;
+      virtual void setConfig(const std::unordered_map<std::string, std::string>& Config) = 0;
 
     public:
       // Methods
-      virtual std::unordered_map<std::string, std::string> getConfig() = 0;
+      
 
     protected:
       // Hybrid Setup

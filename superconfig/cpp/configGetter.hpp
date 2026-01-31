@@ -13,6 +13,8 @@ inline std::unordered_map<std::string, std::string> getActualConfig() {
     return {
         {"NAME", "RITESH"},
         {"GIRLFRIEND", "false"},
-        {"GOD", "true"}
+        {"GOD", "false"},
+        {"DOG", "GOLDU"},
+        {"POKEMON", "DYNAMAX CHARIZ@RD"}
     };
 }

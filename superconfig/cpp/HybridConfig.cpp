@@ -13,6 +13,10 @@ namespace  margelo::nitro::superconfig {
         return getActualConfig();
     }
 
+    void HybridConfig::setConfig(const std::unordered_map<std::string, std::string>& Config){
+        // Do Nothing
+    }
+
   
     
 }
