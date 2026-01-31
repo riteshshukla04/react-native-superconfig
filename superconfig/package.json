@@ -25,6 +25,7 @@
     "app.plugin.js",
     "nitro.json",
     "*.podspec",
+    "cpp",
     "scripts",
     "README.md"
   ],
