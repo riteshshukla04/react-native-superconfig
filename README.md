@@ -26,8 +26,6 @@ yarn add react-native-nitro-modules react-native-superconfig
 cd ios && pod install
 ```
 
-The `.env` file will be automatically processed during `pod install`.
-
 ### Android Setup
 
 No additional setup required! The `.env` file is automatically processed during the build.
