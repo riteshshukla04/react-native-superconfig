@@ -5,14 +5,6 @@ export interface Config extends HybridObject<{ android: 'c++', ios: 'c++' }> {
 }
 const nitroConfig = NitroModules.createHybridObject<Config>('Config')
 
-export interface SuperConfig {
-  [key: string]: string
-}
+const Config = nitroConfig.Config
 
-let Config: SuperConfig | undefined
-
-if (!Config) {
-  Config = nitroConfig.Config
-}
-
-export default Config as SuperConfig
+export default Config
