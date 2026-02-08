@@ -1,5 +1,12 @@
 # Changelog
 
+# [0.9.0](https://github.com/riteshshukla04/react-native-superconfig/compare/v0.8.0...v0.9.0) (2026-02-08)
+
+
+### Bug Fixes
+
+* postinstall ([0f88cce](https://github.com/riteshshukla04/react-native-superconfig/commit/0f88cce3ff180900b44405a9c2b08f3b5fe0cc6d))
+
 # [0.8.0](https://github.com/riteshshukla04/react-native-superconfig/compare/v0.6.0...v0.8.0) (2026-02-08)
 
 

@@ -1,6 +1,6 @@
 {
   "name": "react-native-superconfig",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "description": "react-native-superconfig - Super fast config for react native",
   "main": "lib/index",
   "module": "lib/index",
