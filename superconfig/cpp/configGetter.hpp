@@ -4,6 +4,7 @@
 //
 //  Auto-generated from .env file - DO NOT EDIT MANUALLY
 //
+//
 
 #pragma once
 #include <unordered_map>
@@ -11,10 +12,6 @@
 
 inline std::unordered_map<std::string, std::string> getActualConfig() {
     return {
-        {"NAME", "RITESH"},
-        {"GIRLFRIEND", "false"},
-        {"GOD", "false"},
-        {"DOG", "GOLDU"},
-        {"POKEMON", "DYNAMAX CHARIZ@RD"}
+        {"IS_SUPER_CONFIG_FAST_AF", "true"},
     };
 }
