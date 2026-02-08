@@ -1,51 +1,36 @@
 import React, { useState } from 'react';
 import { View, Text, Button, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
 import Config from 'superconfig';
-import { Config as RNConfig } from 'react-native-config';
 
 export function BenchmarkScreen() {
     const [loading, setLoading] = useState(false);
     const [results, setResults] = useState<{
         nitro: { total: number; average: number } | null;
-        rnConfig: { total: number; average: number } | null;
     }>({
         nitro: null,
-        rnConfig: null,
     });
 
     const runBenchmark = async () => {
         setLoading(true);
         // Yield to UI to show loading state
-        await new Promise((resolve) => setTimeout(resolve, 100));
+        await new Promise<void>((resolve) => setTimeout(resolve, 100));
 
         const ITERATIONS = 100_000;
 
         // Benchmark Nitro
-        const startNitro = performance.now();
-       
+        const startNitro = Date.now();
+
         for (let i = 0; i < ITERATIONS; i++) {
             // Accessing a property to ensure it's actually read
-            const _ = Config.NAME;
+            const _ = Config?.NAME;
         }
-        const endNitro = performance.now();
+        const endNitro = Date.now();
         const nitroTotal = endNitro - startNitro;
-
-        // Benchmark react-native-config
-        const startRn = performance.now();
-        for (let i = 0; i < ITERATIONS; i++) {
-            const _ = RNConfig.NAME;
-        }
-        const endRn = performance.now();
-        const rnTotal = endRn - startRn;
 
         setResults({
             nitro: {
                 total: nitroTotal,
                 average: nitroTotal / ITERATIONS,
-            },
-            rnConfig: {
-                total: rnTotal,
-                average: rnTotal / ITERATIONS,
             },
         });
         setLoading(false);
@@ -70,14 +55,7 @@ export function BenchmarkScreen() {
                 </View>
             )}
 
-            {results.rnConfig && (
-                <View style={styles.resultContainer}>
-                    <Text style={styles.resultTitle}>react-native-config</Text>
-                    <Text>Total Time: {results.rnConfig.total.toFixed(2)} ms</Text>
-                    <Text>Avg Time: {results.rnConfig.average.toFixed(6)} ms</Text>
-                </View>
-            )}
-           <Text>ENV:-  {JSON.stringify(Config)}</Text>
+            <Text>ENV:-  {JSON.stringify(Config)}</Text>
         </ScrollView>
     );
 }

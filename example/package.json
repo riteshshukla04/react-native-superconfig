@@ -14,7 +14,7 @@
     "@react-native/new-app-screen": "0.83.1",
     "react": "19.2.0",
     "react-native": "0.83.1",
-    "react-native-config": "^1.6.1",
+    "react-native-harness": "^1.0.0-alpha.25",
     "react-native-nitro-modules": "^0.33.7",
     "react-native-safe-area-context": "^5.5.2",
     "superconfig": "../superconfig"
@@ -26,6 +26,8 @@
     "@react-native-community/cli": "20.0.0",
     "@react-native-community/cli-platform-android": "20.0.0",
     "@react-native-community/cli-platform-ios": "20.0.0",
+    "@react-native-harness/platform-android": "^1.0.0-alpha.25",
+    "@react-native-harness/platform-apple": "^1.0.0-alpha.25",
     "@react-native/babel-preset": "0.83.1",
     "@react-native/eslint-config": "0.83.1",
     "@react-native/metro-config": "0.83.1",
