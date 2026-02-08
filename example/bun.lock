@@ -9,7 +9,6 @@
         "react-native": "0.83.1",
         "react-native-config": "^1.6.1",
         "react-native-nitro-modules": "^0.33.7",
-        "react-native-nitro-player": "0.3.0-alpha.16",
         "react-native-safe-area-context": "^5.5.2",
         "superconfig": "../superconfig",
       },
@@ -1283,8 +1282,6 @@
     "react-native-config": ["react-native-config@1.6.1", "", { "peerDependencies": { "react": "*", "react-native": "*", "react-native-windows": ">=0.61" }, "optionalPeers": ["react-native-windows"] }, "sha512-HvKtxr6/Tq3iMdFx5REYZsjCtPi0RxQOMCs15+DqrUPTNFtWHuEuh+zw7fJp+dmuO79YMfdtlsPWIGTHtaXwjg=="],
 
     "react-native-nitro-modules": ["react-native-nitro-modules@0.33.7", "", { "peerDependencies": { "react": "*", "react-native": "*" } }, "sha512-WepMobWe4j1Ae5GQ5RxYGBdBpJBwzP6zaOxJ7r6nhbY5iyl01DL3Gsh4gk8edzNFRuAh1rvXDAHIipq8SahxeQ=="],
-
-    "react-native-nitro-player": ["react-native-nitro-player@0.3.0-alpha.16", "", { "peerDependencies": { "react": "*", "react-native": "*", "react-native-nitro-modules": "*" } }, "sha512-fpkJAuxrGuaZa/xjnzmDvrcxSCASP7AfQZ8nfZkFzIq1P/QqPaiSSsD/SWrRglu/jd+LrX2vWhjq3qzxTSk6sQ=="],
 
     "react-native-safe-area-context": ["react-native-safe-area-context@5.6.2", "", { "peerDependencies": { "react": "*", "react-native": "*" } }, "sha512-4XGqMNj5qjUTYywJqpdWZ9IG8jgkS3h06sfVjfw5yZQZfWnRFXczi0GnYyFyCc2EBps/qFmoCH8fez//WumdVg=="],
 

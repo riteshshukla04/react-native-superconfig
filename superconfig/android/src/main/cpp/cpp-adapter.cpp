@@ -1,6 +1,10 @@
-#include <jni.h>
 #include "NitroSuperconfigOnLoad.hpp"
+#include <fbjni/fbjni.h>
+#include <jni.h>
 
-JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM* vm, void*) {
-  return margelo::nitro::superconfig::initialize(vm);
+void register_superconfig_native();
+
+JNIEXPORT jint JNICALL JNI_OnLoad(JavaVM *vm, void *) {
+  margelo::nitro::superconfig::initialize(vm);
+  return facebook::jni::initialize(vm, [] { register_superconfig_native(); });
 }

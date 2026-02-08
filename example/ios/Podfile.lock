@@ -8,7 +8,7 @@ PODS:
   - hermes-engine (0.14.0):
     - hermes-engine/Pre-built (= 0.14.0)
   - hermes-engine/Pre-built (0.14.0)
-  - NitroModules (0.33.2):
+  - NativeSuperConfig (0.6.0):
     - boost
     - DoubleConversion
     - fast_float
@@ -37,7 +37,36 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - NitroSuperconfig (0.0.3):
+  - NitroModules (0.33.7):
+    - boost
+    - DoubleConversion
+    - fast_float
+    - fmt
+    - glog
+    - hermes-engine
+    - RCT-Folly
+    - RCT-Folly/Fabric
+    - RCTRequired
+    - RCTTypeSafety
+    - React-callinvoker
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-jsi
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-renderercss
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - SocketRocket
+    - Yoga
+  - NitroSuperconfig (0.6.0):
     - boost
     - DoubleConversion
     - fast_float
@@ -2636,6 +2665,7 @@ DEPENDENCIES:
   - fmt (from `../node_modules/react-native/third-party-podspecs/fmt.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
   - hermes-engine (from `../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec`)
+  - NativeSuperConfig (from `../node_modules/superconfig/NitroSuperconfigNative.podspec`)
   - NitroModules (from `../node_modules/react-native-nitro-modules`)
   - NitroSuperconfig (from `../node_modules/superconfig`)
   - RCT-Folly (from `../node_modules/react-native/third-party-podspecs/RCT-Folly.podspec`)
@@ -2733,6 +2763,8 @@ EXTERNAL SOURCES:
   hermes-engine:
     :podspec: "../node_modules/react-native/sdks/hermes-engine/hermes-engine.podspec"
     :tag: hermes-v0.14.0
+  NativeSuperConfig:
+    :path: "../node_modules/superconfig/NitroSuperconfigNative.podspec"
   NitroModules:
     :path: "../node_modules/react-native-nitro-modules"
   NitroSuperconfig:
@@ -2890,8 +2922,9 @@ SPEC CHECKSUMS:
   fmt: a40bb5bd0294ea969aaaba240a927bd33d878cdd
   glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
   hermes-engine: 2fdeff540c9a6172fb19e8bee2d3df3ccb3c7846
-  NitroModules: 11bba9d065af151eae51e38a6425e04c3b223ff3
-  NitroSuperconfig: 8a89cadf0ca22964a91b039ea4e2c6fb28a23c97
+  NativeSuperConfig: cf01f367aab458da5490e69e93707bedd74b26a7
+  NitroModules: e8ec707a245a85cf1eb4289f91a9372f9590a897
+  NitroSuperconfig: 125ec5823603501e0ad549d1c5f20841a7c9c813
   RCT-Folly: 846fda9475e61ec7bcbf8a3fe81edfcaeb090669
   RCTDeprecation: a41bbdd9af30bf2e5715796b313e44ec43eefff1
   RCTRequired: 7be34aabb0b77c3cefe644528df0fa0afad4e4d0
@@ -2966,6 +2999,6 @@ SPEC CHECKSUMS:
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   Yoga: 5456bb010373068fc92221140921b09d126b116e
 
-PODFILE CHECKSUM: 3aa3b5f5253be927d355cf1499f60c53140eb9a3
+PODFILE CHECKSUM: 7619b7510e738e00b93774ac331e7a78da5bf15d
 
 COCOAPODS: 1.15.2
