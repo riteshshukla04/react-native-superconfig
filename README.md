@@ -55,7 +55,21 @@ console.log(Config.FEATURE_FLAG);   // "true"
 
 That's it! Your config values are now accessible with native performance.
 
+## Types
+
 > **Note**: A `superconfig.d.ts` file is auto-generated in your project root from your `.env` file, giving you full autocomplete and type checking out of the box.
+
+### Type Safety Tips:
+Since `react-native-superconfig` generates types based on your local `.env`, the initial install might not have your specific keys. We include a `postinstall` script to generate them automatically, but package managers can sometimes be flaky with these hooks.
+To ensure **100% type safety** locally and in CI, add this to your app's `package.json`:
+
+```json
+"scripts": {
+  "generate-config": "node ./node_modules/react-native-superconfig/scripts/generate-config.js",
+  "postinstall": "bun run generate-config && patch-package"
+}
+```
+Example:- https://github.com/Jellify-Music/App/blob/da4058120d1a985d6ab9bd914772a6d548ba54f4/package.json#L37-L38
 
 ## How it works
 
