@@ -6,7 +6,6 @@ import {
   applePlatform,
   appleSimulator,
 } from '@react-native-harness/platform-apple';
-import { webPlatform, chromium } from '@react-native-harness/platform-web';
 
 const config = {
   entryPoint: './index.js',
@@ -20,8 +19,8 @@ const config = {
     }),
     applePlatform({
       name: 'ios',
-      device: appleSimulator('iPhone 17', '26.2'), // Your iOS simulator name and version
-    bundleId: 'org.reactjs.native.example.example', // Your iOS bundle ID
+      device: appleSimulator('iPhone 17 Pro', '26.2'), // Your iOS simulator name and version
+      bundleId: 'org.reactjs.native.example.example', // Your iOS bundle ID
     })
   ],
 };
