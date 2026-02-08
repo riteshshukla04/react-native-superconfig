@@ -6,7 +6,8 @@ import com.facebook.react.ReactApplication
 import com.facebook.react.ReactHost
 import com.facebook.react.ReactNativeApplicationEntryPoint.loadReactNative
 import com.facebook.react.defaults.DefaultReactHost.getDefaultReactHost
-
+import com.margelo.nitro.superconfig.config
+import android.util.Log
 class MainApplication : Application(), ReactApplication {
 
   override val reactHost: ReactHost by lazy {
@@ -21,6 +22,8 @@ class MainApplication : Application(), ReactApplication {
   }
 
   override fun onCreate() {
+    val envValues = config
+    Log.d("SuperConfig", envValues["DOG"] ?: "Unknown")
     super.onCreate()
     loadReactNative(this)
   }
