@@ -84,6 +84,35 @@ import Config from 'react-native-superconfig';
 const value = Config.YOUR_ENV_VAR;
 ```
 
+## Native Usage
+
+You can also access your configuration values directly from native code (iOS & Android).
+
+### iOS (Swift)
+
+1. Add `NativeSuperConfig` to your target in `Podfile` (if not already there):
+```ruby
+pod 'NativeSuperConfig', :path => '../node_modules/superconfig/NitroSuperconfigNative.podspec'
+```
+
+2. Import and use:
+```swift
+import NativeSuperConfig
+
+// Access config values
+let config = ConfigGetter.getNativeConfig()
+let apiUrl = config["API_URL"]
+```
+
+### Android (Kotlin)
+
+```kotlin
+import com.margelo.nitro.superconfig.config
+
+// Access config values
+val apiUrl = config["API_URL"]
+```
+
 ## Security
 
 superconfig offers **better obfuscation** than traditional approaches like `BuildConfig.java`:
