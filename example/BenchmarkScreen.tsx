@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, Button, StyleSheet, ScrollView, ActivityIndicator } from 'react-native';
 import Config from 'superconfig';
 import { Config as RNConfig } from 'react-native-config';
+
 export function BenchmarkScreen() {
     const [loading, setLoading] = useState(false);
     const [results, setResults] = useState<{
