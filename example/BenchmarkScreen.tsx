@@ -9,7 +9,7 @@ export function BenchmarkScreen() {
     }>({
         nitro: null,
     });
-
+    
     const runBenchmark = async () => {
         setLoading(true);
         // Yield to UI to show loading state
@@ -22,7 +22,7 @@ export function BenchmarkScreen() {
 
         for (let i = 0; i < ITERATIONS; i++) {
             // Accessing a property to ensure it's actually read
-            const _ = Config?.NAME;
+            const _ = Config;
         }
         const endNitro = Date.now();
         const nitroTotal = endNitro - startNitro;

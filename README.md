@@ -11,6 +11,7 @@ A blazing-fast configuration library for React Native, powered by [Nitro Modules
 - 🎯 Simple API - works just like react-native-config
 - 🔄 Automatic config generation from `.env` files
 - 📦 Zero runtime overhead - configs are compiled into native code
+- 🛡️ Type-safe - auto-generated types from your `.env` with full autocomplete
 
 ## Installation
 
@@ -25,6 +26,8 @@ yarn add react-native-nitro-modules react-native-superconfig
 ```bash
 cd ios && pod install
 ```
+
+The `.env` file will be automatically processed during `pod install`.
 
 ### Android Setup
 
@@ -51,6 +54,8 @@ console.log(Config.FEATURE_FLAG);   // "true"
 ```
 
 That's it! Your config values are now accessible with native performance.
+
+> **Note**: A `superconfig.d.ts` file is auto-generated in your project root from your `.env` file, giving you full autocomplete and type checking out of the box.
 
 ## How it works
 

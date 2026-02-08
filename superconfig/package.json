@@ -4,7 +4,7 @@
   "description": "react-native-superconfig - Super fast config for react native",
   "main": "lib/index",
   "module": "lib/index",
-  "types": "lib/index.d.ts",
+  "types": "lib/superconfig.d.ts",
   "react-native": "src/index",
   "source": "src/index",
   "files": [
