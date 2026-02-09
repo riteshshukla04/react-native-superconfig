@@ -6,7 +6,7 @@ import com.facebook.react.ReactApplication
 import com.facebook.react.ReactHost
 import com.facebook.react.ReactNativeApplicationEntryPoint.loadReactNative
 import com.facebook.react.defaults.DefaultReactHost.getDefaultReactHost
-import com.margelo.nitro.superconfig.config
+import com.margelo.nitro.superconfig.NativeSuperConfig.config
 import android.util.Log
 class MainApplication : Application(), ReactApplication {
 
