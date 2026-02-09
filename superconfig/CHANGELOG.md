@@ -1,5 +1,12 @@
 # Changelog
 
+# [0.10.0](https://github.com/riteshshukla04/react-native-superconfig/compare/v0.9.0...v0.10.0) (2026-02-09)
+
+
+### Bug Fixes
+
+* proguard ([b3a2b96](https://github.com/riteshshukla04/react-native-superconfig/commit/b3a2b9600931f66ae10231a5ef1ef304014e041d))
+
 # [0.9.0](https://github.com/riteshshukla04/react-native-superconfig/compare/v0.8.0...v0.9.0) (2026-02-08)
 
 
