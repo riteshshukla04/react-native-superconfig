@@ -1,12 +1,10 @@
-# superconfig ⚡
+# react-native-superconfig ⚡
 
-**18x faster than react-native-config** 🚀
-
-A blazing-fast configuration library for React Native, powered by [Nitro Modules](https://github.com/mrousavy/nitro). Access your environment variables with native performance through C++ bindings.
+A blazing-fast configuration library (~18x faster) for React Native, powered by [Nitro Modules](https://github.com/mrousavy/nitro). Access your environment variables with native performance through C++ bindings.
 
 ## Why superconfig?
 
-- ⚡ **18x faster** than react-native-config
+- ⚡ Superfast
 - 🔥 Built on Nitro Modules for native performance
 - 🎯 Simple API - works just like react-native-config
 - 🔄 Automatic config generation from `.env` files
@@ -55,7 +53,21 @@ console.log(Config.FEATURE_FLAG);   // "true"
 
 That's it! Your config values are now accessible with native performance.
 
+## Types
+
 > **Note**: A `superconfig.d.ts` file is auto-generated in your project root from your `.env` file, giving you full autocomplete and type checking out of the box.
+
+### Type Safety Tips:
+Since `react-native-superconfig` generates types based on your local `.env`, the initial install might not have your specific keys. We include a `postinstall` script to generate them automatically, but package managers can sometimes be flaky with these hooks.
+To ensure **100% type safety** locally and in CI, add this to your app's `package.json`:
+
+```json
+"scripts": {
+  "generate-config": "node ./node_modules/react-native-superconfig/scripts/generate-config.js",
+  "postinstall": "bun run generate-config && patch-package"
+}
+```
+Example:- https://github.com/Jellify-Music/App/blob/da4058120d1a985d6ab9bd914772a6d548ba54f4/package.json#L37-L38
 
 ## How it works
 
@@ -67,14 +79,7 @@ superconfig uses a build-time script that:
 
 This means **zero JavaScript bridge overhead** - your configs are accessed directly from native code!
 
-## Performance
-
-Benchmarked with 100,000 reads(See example app):
-
-| Library | Time | Performance |
-|---------|------|-------------|
-| **superconfig** | ~1.5ms | ⚡ **18x faster** |
-| react-native-config | ~19.41ms | 🐌 baseline |
+We tested in Jellify app and found that it increased tti to 3%
 
 ## API
 
