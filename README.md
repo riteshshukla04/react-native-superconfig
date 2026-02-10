@@ -115,7 +115,7 @@ let apiUrl = config["API_URL"]
 ### Android (Kotlin)
 
 ```kotlin
-import com.margelo.nitro.superconfig.config
+import com.margelo.nitro.superconfig.NativeSuperConfig.config
 
 // Access config values
 val apiUrl = config["API_URL"]
