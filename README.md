@@ -1,8 +1,6 @@
 # superconfig ⚡
 
-**18x faster than react-native-config** 🚀
-
-A blazing-fast configuration library for React Native, powered by [Nitro Modules](https://github.com/mrousavy/nitro). Access your environment variables with native performance through C++ bindings.
+A blazing-fast configuration library (~10-18x faster) for React Native, powered by [Nitro Modules](https://github.com/mrousavy/nitro). Access your environment variables with native performance through C++ bindings.
 
 ## Why superconfig?
 
@@ -81,14 +79,7 @@ superconfig uses a build-time script that:
 
 This means **zero JavaScript bridge overhead** - your configs are accessed directly from native code!
 
-## Performance
-
-Benchmarked with 100,000 reads(See example app):
-
-| Library | Time | Performance |
-|---------|------|-------------|
-| **superconfig** | ~1.5ms | ⚡ **18x faster** |
-| react-native-config | ~19.41ms | 🐌 baseline |
+We tested in Jellify app and found that it increased tti to 3%
 
 ## API
 
