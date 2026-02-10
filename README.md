@@ -4,7 +4,7 @@ A blazing-fast configuration library (~10-18x faster) for React Native, powered 
 
 ## Why superconfig?
 
-- ⚡ **18x faster** than react-native-config
+- ⚡ Superfast
 - 🔥 Built on Nitro Modules for native performance
 - 🎯 Simple API - works just like react-native-config
 - 🔄 Automatic config generation from `.env` files
