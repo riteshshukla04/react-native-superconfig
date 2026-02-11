@@ -1,10 +1,10 @@
 # react-native-superconfig ⚡
 
-A blazing-fast configuration library (~18x faster) for React Native, powered by [Nitro Modules](https://github.com/mrousavy/nitro). Access your environment variables with native performance through C++ bindings.
+A blazing-fast configuration library (>18x faster) for React Native, powered by [Nitro Modules](https://github.com/mrousavy/nitro). Access your environment variables with native performance through C++ bindings.
 
 ## Why superconfig?
 
-- ⚡ Superfast
+- ⚡ Superfast. More than 18x faster 
 - 🔥 Built on Nitro Modules for native performance
 - 🎯 Simple API - works just like react-native-config
 - 🔄 Automatic config generation from `.env` files
@@ -120,6 +120,24 @@ import com.margelo.nitro.superconfig.NativeSuperConfig.config
 // Access config values
 val apiUrl = config["API_URL"]
 ```
+
+### Cross Platform (cpp)
+
+```cpp
+#include "configGetter.hpp"
+
+// Access config values
+auto config = getActualConfig();
+auto apiUrl = config["API_URL"];
+```
+
+## Performance and Benchmarks
+| Library | Time | Performance |
+|---------|------|-------------|
+| **superconfig** | ~1.5ms | ⚡ **18x faster** |
+| react-native-config | ~19.41ms | 🐌 baseline |
+
+See [Benchmarks.md](Benchmarks.md) and [BenchmarkApp](BenchmarkApp) for more details on how we tested this out. 
 
 ## Security
 
