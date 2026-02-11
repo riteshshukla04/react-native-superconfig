@@ -137,7 +137,7 @@ auto apiUrl = config["API_URL"];
 | **superconfig** | ~1.5ms | ⚡ **18x faster** |
 | react-native-config | ~19.41ms | 🐌 baseline |
 
-See [Benchmarks.md](Benchmarks.md) and [BenchmarkApp](BenchmarkApp) for more details on how we tested this out. 
+See [Benchmarks.md](BenchmarkApp/Benchmarks.md) and [BenchmarkApp](BenchmarkApp) for more details on how we tested this out. 
 
 ## Security
 
