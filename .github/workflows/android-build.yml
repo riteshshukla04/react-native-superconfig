@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [main]
     paths:
-      - '
+      - '.github/workflows/android-build.yml'
       - 'superconfig/android/**'
       - 'example/android/**'
   workflow_dispatch:
@@ -39,6 +39,7 @@ jobs:
       - name: Install dependencies
         run: |
           bun install
+        working-directory: example
       - name: Cache Gradle
         uses: actions/cache@v4
         with:

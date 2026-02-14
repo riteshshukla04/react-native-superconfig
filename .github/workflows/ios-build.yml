@@ -9,6 +9,7 @@ on:
       - 'superconfig/ios/**'
       - 'example/ios/**'
       - '**/Podfile'
+      - '.github/workflows/ios-build.yml'
       - '**/Podfile.lock'
   workflow_dispatch:
 
@@ -33,7 +34,7 @@ jobs:
       - name: Install dependencies
         run: |
           bun install
-
+        working-directory: example
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
