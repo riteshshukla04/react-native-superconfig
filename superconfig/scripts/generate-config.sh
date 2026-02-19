@@ -10,6 +10,14 @@ fi
 # Set NODE_BINARY if not already set
 [ -z "$NODE_BINARY" ] && export NODE_BINARY="node"
 
+# If NODE_BINARY is configured but invalid, fall back to PATH lookup.
+if ! type "$NODE_BINARY" >/dev/null 2>&1; then
+  FALLBACK_NODE="$(command -v node || true)"
+  if [ -n "$FALLBACK_NODE" ]; then
+    export NODE_BINARY="$FALLBACK_NODE"
+  fi
+fi
+
 # Check if node is available
 if ! type "$NODE_BINARY" >/dev/null 2>&1; then
   echo "error: Can't find '$NODE_BINARY' to generate Superconfig. " \
