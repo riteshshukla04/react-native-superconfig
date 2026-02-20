@@ -12,9 +12,6 @@
 
 inline std::unordered_map<std::string, std::string> getActualConfig() {
     return {
-        {"PORT", "3000"},
-        {"NODE_ENV", "development"},
-        {"HOST", "localhost"},
-        {"ENABLE_CACHE", "true"}
+
     };
 }
