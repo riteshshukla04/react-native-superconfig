@@ -27,8 +27,21 @@ apply from: "./fix-prefab.gradle"
 task generateConfig(type: Exec) {
   workingDir "${project.projectDir}/.."
   commandLine "node", "scripts/generate-config.js"
+
+  // Try to find the app root by walking up the project hierarchy
+  // In standard setups, the app root is typically 2-3 levels up from the library
   doFirst {
     logger.warn("[Superconfig] 🔧 Generating config from .env file...")
+
+    // If not already set, try to infer app root from root project
+    if (!environment.containsKey("SUPERCONFIG_APP_ROOT")) {
+      def appRoot = rootProject.projectDir
+      // Check if root project has a .env file - if so, use it
+      if (new File(appRoot, ".env").exists()) {
+        environment "SUPERCONFIG_APP_ROOT", appRoot.absolutePath
+        logger.warn("[Superconfig] Setting app root to: ${appRoot.absolutePath}")
+      }
+    }
   }
 }
 
