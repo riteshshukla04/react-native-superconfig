@@ -10,12 +10,24 @@ fi
 # Set NODE_BINARY if not already set
 [ -z "$NODE_BINARY" ] && export NODE_BINARY="node"
 
-# If NODE_BINARY is configured but invalid, fall back to PATH lookup.
-if ! type "$NODE_BINARY" >/dev/null 2>&1; then
-  FALLBACK_NODE="$(command -v node || true)"
-  if [ -n "$FALLBACK_NODE" ]; then
-    export NODE_BINARY="$FALLBACK_NODE"
-  fi
+# Optional: Set app root from Xcode environment if available
+# This helps ensure correct .env detection in monorepo setups
+if [ -n "$PROJECT_DIR" ] && [ -z "$SUPERCONFIG_APP_ROOT" ]; then
+  export SUPERCONFIG_APP_ROOT="$PROJECT_DIR"
+elif [ -n "$SRCROOT" ] && [ -z "$SUPERCONFIG_APP_ROOT" ]; then
+  export SUPERCONFIG_APP_ROOT="$SRCROOT"
+fi
+
+# Override the default with the global environment
+ENV_PATH="$PODS_ROOT/../.xcode.env"
+if [ -f "$ENV_PATH" ]; then
+    source "$ENV_PATH"
+fi
+
+# Override the global with the local environment
+LOCAL_ENV_PATH="${ENV_PATH}.local"
+if [ -f "$LOCAL_ENV_PATH" ]; then
+    source "$LOCAL_ENV_PATH"
 fi
 
 # Check if node is available

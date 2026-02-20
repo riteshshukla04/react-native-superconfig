@@ -12,37 +12,293 @@ const path = require('path');
 // Library root (where this script is located)
 const libraryRoot = path.resolve(__dirname, '..');
 
-// Find app root by looking for parent of node_modules
-function findAppRoot() {
+/**
+ * Helper: Check if a directory is a React Native app root
+ */
+function isReactNativeApp(dir) {
+    try {
+        const packageJsonPath = path.join(dir, 'package.json');
+        if (!fs.existsSync(packageJsonPath)) {
+            return false;
+        }
+
+        const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
+
+        // Check for react-native dependency
+        const hasReactNative = !!(
+            packageJson.dependencies?.['react-native'] ||
+            packageJson.devDependencies?.['react-native']
+        );
+
+        // Check for ios/ or android/ directories
+        const hasIosDir = fs.existsSync(path.join(dir, 'ios'));
+        const hasAndroidDir = fs.existsSync(path.join(dir, 'android'));
+
+        return hasReactNative && (hasIosDir || hasAndroidDir);
+    } catch (error) {
+        return false;
+    }
+}
+
+/**
+ * Strategy 3: Node Modules Detection (backward compatibility)
+ */
+function findAppRootFromNodeModules() {
     let currentDir = libraryRoot;
 
-    // Walk up the directory tree to find the app root
+    // Walk up the directory tree to find node_modules
     while (currentDir !== path.dirname(currentDir)) {
+        const parentDir = path.dirname(currentDir);
+        const parentBasename = path.basename(parentDir);
+
         // Check if we're inside node_modules
-        if (path.basename(path.dirname(currentDir)) === 'node_modules') {
-            // App root is the parent of node_modules
-            return path.dirname(path.dirname(currentDir));
+        if (parentBasename === 'node_modules') {
+            const appRoot = path.dirname(parentDir);
+            // Validate it's actually a React Native app
+            if (isReactNativeApp(appRoot)) {
+                return { appRoot, strategy: 'node_modules' };
+            }
         }
+
+        // Check if parent is a scoped package (@scope)
+        if (parentBasename.startsWith('@')) {
+            const grandparentDir = path.dirname(parentDir);
+            if (path.basename(grandparentDir) === 'node_modules') {
+                const appRoot = path.dirname(grandparentDir);
+                if (isReactNativeApp(appRoot)) {
+                    return { appRoot, strategy: 'node_modules (scoped)' };
+                }
+            }
+        }
+
+        currentDir = parentDir;
+    }
+
+    return null;
+}
+
+/**
+ * Strategy 4: Walk Up from Library Root
+ */
+function walkUpToFindApp(startDir, maxLevels = 5) {
+    let currentDir = startDir;
+    let level = 0;
+
+    while (currentDir !== path.dirname(currentDir) && level < maxLevels) {
+        // Check if current directory is a React Native app with .env
+        if (isReactNativeApp(currentDir)) {
+            const envPath = path.join(currentDir, '.env');
+            if (fs.existsSync(envPath)) {
+                return { appRoot: currentDir, strategy: 'walk_up' };
+            }
+        }
+
         currentDir = path.dirname(currentDir);
+        level++;
     }
 
-    // Fallback for local development
-    const exampleEnv = path.join(libraryRoot, '..', 'example', '.env');
-    if (fs.existsSync(exampleEnv)) {
-        return path.join(libraryRoot, '..', 'example');
+    return null;
+}
+
+/**
+ * Helper: Check if an app depends on this library (via package.json)
+ */
+function appDependsOnLibrary(appDir, libraryPath) {
+    try {
+        const packageJsonPath = path.join(appDir, 'package.json');
+        if (!fs.existsSync(packageJsonPath)) {
+            return false;
+        }
+
+        const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'));
+        const allDeps = {
+            ...packageJson.dependencies,
+            ...packageJson.devDependencies
+        };
+
+        // Check if any dependency points to our library (by path or name)
+        for (const [name, version] of Object.entries(allDeps)) {
+            // Check for path-based dependencies
+            if (typeof version === 'string' && version.startsWith('.')) {
+                const depPath = path.resolve(appDir, version);
+                if (depPath === libraryPath) {
+                    return true;
+                }
+            }
+            // Check for name-based dependencies
+            if (name.includes('superconfig') || name === '@margelo/superconfig') {
+                return true;
+            }
+        }
+
+        return false;
+    } catch (error) {
+        return false;
+    }
+}
+
+/**
+ * Strategy 5: Check common app locations in monorepo with hoisted dependencies
+ */
+function findAppInHoistedMonorepo(libraryDir) {
+    // If we're in node_modules, the monorepo root is likely 2 levels up
+    // Check for common app locations like example/, app/, etc.
+    const parts = libraryDir.split(path.sep);
+    const nodeModulesIndex = parts.lastIndexOf('node_modules');
+
+    if (nodeModulesIndex !== -1) {
+        // Monorepo root is before node_modules
+        const monorepoRoot = parts.slice(0, nodeModulesIndex).join(path.sep);
+
+        // Check common app directory names
+        const commonAppDirs = ['example', 'app', 'apps', 'packages'];
+
+        for (const dirName of commonAppDirs) {
+            const candidateDir = path.join(monorepoRoot, dirName);
+            if (fs.existsSync(candidateDir) && isReactNativeApp(candidateDir)) {
+                const envPath = path.join(candidateDir, '.env');
+                if (fs.existsSync(envPath)) {
+                    return { appRoot: candidateDir, strategy: 'hoisted_monorepo' };
+                }
+            }
+        }
+
+        // Also check if monorepo root itself is the app
+        if (isReactNativeApp(monorepoRoot)) {
+            const envPath = path.join(monorepoRoot, '.env');
+            if (fs.existsSync(envPath)) {
+                return { appRoot: monorepoRoot, strategy: 'hoisted_monorepo_root' };
+            }
+        }
     }
 
-    // Last fallback: use library root itself
-    return libraryRoot;
+    return null;
+}
+
+/**
+ * Strategy 6: Monorepo Sibling Search
+ */
+function findAppInMonorepo(libraryDir) {
+    const parentDir = path.dirname(libraryDir);
+    const libraryName = path.basename(libraryDir);
+
+    try {
+        const siblings = fs.readdirSync(parentDir, { withFileTypes: true });
+        const apps = [];
+        const appsWithDependency = [];
+
+        for (const sibling of siblings) {
+            if (sibling.isDirectory()) {
+                const siblingPath = path.join(parentDir, sibling.name);
+
+                // Skip node_modules, hidden directories, and the library itself
+                if (sibling.name === 'node_modules' ||
+                    sibling.name.startsWith('.') ||
+                    sibling.name === libraryName) {
+                    continue;
+                }
+
+                // Check if it's a React Native app with .env
+                if (isReactNativeApp(siblingPath)) {
+                    const envPath = path.join(siblingPath, '.env');
+                    if (fs.existsSync(envPath)) {
+                        apps.push(siblingPath);
+
+                        // Check if this app explicitly depends on the library
+                        if (appDependsOnLibrary(siblingPath, libraryDir)) {
+                            appsWithDependency.push(siblingPath);
+                        }
+                    }
+                }
+            }
+        }
+
+        // Prefer apps that explicitly depend on this library
+        if (appsWithDependency.length === 1) {
+            return { appRoot: appsWithDependency[0], strategy: 'monorepo_sibling (by_dependency)' };
+        } else if (appsWithDependency.length > 1) {
+            console.warn('[Superconfig] ⚠️  Multiple apps with superconfig dependency found:');
+            appsWithDependency.forEach(app => console.warn(`  - ${path.basename(app)}`));
+            console.warn('[Superconfig] ⚠️  Set SUPERCONFIG_APP_ROOT to specify which app to use.');
+            return { appRoot: appsWithDependency[0], strategy: 'monorepo_sibling (multiple_with_dep)' };
+        }
+
+        // Fall back to any React Native app found
+        if (apps.length === 1) {
+            return { appRoot: apps[0], strategy: 'monorepo_sibling' };
+        } else if (apps.length > 1) {
+            console.warn('[Superconfig] ⚠️  Multiple React Native apps found in monorepo:');
+            apps.forEach(app => console.warn(`  - ${path.basename(app)}`));
+            console.warn('[Superconfig] ⚠️  Using first app. Set SUPERCONFIG_APP_ROOT to override.');
+            return { appRoot: apps[0], strategy: 'monorepo_sibling (multiple)' };
+        }
+    } catch (error) {
+        // Ignore errors reading directory
+    }
+
+    return null;
+}
+
+/**
+ * Multi-strategy app root detection
+ */
+function findAppRoot() {
+    // Strategy 1: Environment Variable Override
+    if (process.env.SUPERCONFIG_APP_ROOT) {
+        const appRoot = path.resolve(process.env.SUPERCONFIG_APP_ROOT);
+        if (fs.existsSync(appRoot) && isReactNativeApp(appRoot)) {
+            return { appRoot, strategy: 'environment_variable' };
+        } else {
+            console.warn(`[Superconfig] ⚠️  SUPERCONFIG_APP_ROOT set but invalid: ${appRoot}`);
+        }
+    }
+
+    // Strategy 2: Process Working Directory Check
+    const cwd = process.cwd();
+    if (isReactNativeApp(cwd)) {
+        const envPath = path.join(cwd, '.env');
+        if (fs.existsSync(envPath)) {
+            return { appRoot: cwd, strategy: 'process_cwd' };
+        }
+    }
+
+    // Strategy 3: Node Modules Detection (backward compatibility)
+    const nodeModulesResult = findAppRootFromNodeModules();
+    if (nodeModulesResult) {
+        return nodeModulesResult;
+    }
+
+    // Strategy 4: Walk Up from Library Root
+    const walkUpResult = walkUpToFindApp(path.dirname(libraryRoot));
+    if (walkUpResult) {
+        return walkUpResult;
+    }
+
+    // Strategy 5: Check for hoisted monorepo setup (node_modules at root)
+    const hoistedResult = findAppInHoistedMonorepo(libraryRoot);
+    if (hoistedResult) {
+        return hoistedResult;
+    }
+
+    // Strategy 6: Monorepo Sibling Search
+    const monorepoResult = findAppInMonorepo(libraryRoot);
+    if (monorepoResult) {
+        return monorepoResult;
+    }
+
+    // No app root found
+    return { appRoot: libraryRoot, strategy: 'fallback (library_root)' };
 }
 
 // Paths
-const appRoot = findAppRoot();
+const { appRoot, strategy } = findAppRoot();
 const envPath = path.join(appRoot, '.env');
 const outputPath = path.join(libraryRoot, 'cpp', 'configGetter.hpp');
 
 console.log('[Superconfig] 🔧 Generating config...');
+console.log('  Library root:', libraryRoot);
 console.log('  App root:', appRoot);
+console.log('  Detection strategy:', strategy);
 console.log('  .env path:', envPath);
 console.log('  Output path:', outputPath);
 
@@ -328,6 +584,8 @@ if (fs.existsSync(envPath)) {
     console.log('[Superconfig] ✅ Generated superconfig.d.ts');
 } else {
     console.warn(`[Superconfig] ⚠️  .env file not found at ${envPath}`);
+    console.warn(`[Superconfig] ⚠️  Detection strategy used: ${strategy}`);
+    console.warn('[Superconfig] ⚠️  To explicitly set app root, use: SUPERCONFIG_APP_ROOT=/path/to/app');
     // Create empty config
     const cppContent = generateCppHeader({});
     fs.writeFileSync(outputPath, cppContent, 'utf-8');

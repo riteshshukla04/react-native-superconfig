@@ -27,8 +27,17 @@ apply from: "./fix-prefab.gradle"
 task generateConfig(type: Exec) {
   workingDir "${project.projectDir}/.."
   commandLine "node", "scripts/generate-config.js"
+
   doFirst {
     logger.warn("[Superconfig] 🔧 Generating config from .env file...")
+
+    // If not already set, use rootProject.projectDir/.. which gives us the React Native app root
+    // In standard RN apps: rootProject.projectDir = MyApp/android, so ../android = MyApp
+    if (!environment.containsKey("SUPERCONFIG_APP_ROOT")) {
+      def appRoot = new File("${rootProject.projectDir}/..")
+      environment "SUPERCONFIG_APP_ROOT", appRoot.canonicalPath
+      logger.warn("[Superconfig] Setting app root to: ${appRoot.canonicalPath}")
+    }
   }
 }
 
