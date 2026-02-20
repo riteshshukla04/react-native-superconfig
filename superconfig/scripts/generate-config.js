@@ -138,7 +138,45 @@ function appDependsOnLibrary(appDir, libraryPath) {
 }
 
 /**
- * Strategy 5: Monorepo Sibling Search
+ * Strategy 5: Check common app locations in monorepo with hoisted dependencies
+ */
+function findAppInHoistedMonorepo(libraryDir) {
+    // If we're in node_modules, the monorepo root is likely 2 levels up
+    // Check for common app locations like example/, app/, etc.
+    const parts = libraryDir.split(path.sep);
+    const nodeModulesIndex = parts.lastIndexOf('node_modules');
+
+    if (nodeModulesIndex !== -1) {
+        // Monorepo root is before node_modules
+        const monorepoRoot = parts.slice(0, nodeModulesIndex).join(path.sep);
+
+        // Check common app directory names
+        const commonAppDirs = ['example', 'app', 'apps', 'packages'];
+
+        for (const dirName of commonAppDirs) {
+            const candidateDir = path.join(monorepoRoot, dirName);
+            if (fs.existsSync(candidateDir) && isReactNativeApp(candidateDir)) {
+                const envPath = path.join(candidateDir, '.env');
+                if (fs.existsSync(envPath)) {
+                    return { appRoot: candidateDir, strategy: 'hoisted_monorepo' };
+                }
+            }
+        }
+
+        // Also check if monorepo root itself is the app
+        if (isReactNativeApp(monorepoRoot)) {
+            const envPath = path.join(monorepoRoot, '.env');
+            if (fs.existsSync(envPath)) {
+                return { appRoot: monorepoRoot, strategy: 'hoisted_monorepo_root' };
+            }
+        }
+    }
+
+    return null;
+}
+
+/**
+ * Strategy 6: Monorepo Sibling Search
  */
 function findAppInMonorepo(libraryDir) {
     const parentDir = path.dirname(libraryDir);
@@ -236,7 +274,13 @@ function findAppRoot() {
         return walkUpResult;
     }
 
-    // Strategy 5: Monorepo Sibling Search
+    // Strategy 5: Check for hoisted monorepo setup (node_modules at root)
+    const hoistedResult = findAppInHoistedMonorepo(libraryRoot);
+    if (hoistedResult) {
+        return hoistedResult;
+    }
+
+    // Strategy 6: Monorepo Sibling Search
     const monorepoResult = findAppInMonorepo(libraryRoot);
     if (monorepoResult) {
         return monorepoResult;
