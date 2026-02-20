@@ -1,5 +1,19 @@
 # Changelog
 
+# [0.15.0](https://github.com/riteshshukla04/react-native-superconfig/compare/v0.10.0...v0.15.0) (2026-02-20)
+
+
+### Bug Fixes
+
+* **ios:** fallback to PATH node when NODE_BINARY is invalid ([#10](https://github.com/riteshshukla04/react-native-superconfig/issues/10)) ([fbd3bcc](https://github.com/riteshshukla04/react-native-superconfig/commit/fbd3bcc584b2b4aee0d39c41c604da8f51f0f82b))
+* monorepo ([#11](https://github.com/riteshshukla04/react-native-superconfig/issues/11)) ([bf3a6ff](https://github.com/riteshshukla04/react-native-superconfig/commit/bf3a6ff39eefedcbed34b842a77f40d7d6198d68))
+
+
+### Features
+
+* add-pipelines ([fc8870d](https://github.com/riteshshukla04/react-native-superconfig/commit/fc8870d690b55b793da2b039d48ca0198671b8c1))
+* add-pipelines ([#8](https://github.com/riteshshukla04/react-native-superconfig/issues/8)) ([416f09a](https://github.com/riteshshukla04/react-native-superconfig/commit/416f09ad0ec784fb3deb819440748d616dae1a52))
+
 # [0.11.0-alpha.0](https://github.com/riteshshukla04/react-native-superconfig/compare/v0.10.0...v0.11.0-alpha.0) (2026-02-20)
 
 
