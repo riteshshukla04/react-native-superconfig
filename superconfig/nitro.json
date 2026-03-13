@@ -14,7 +14,10 @@
   },
   "autolinking": {
     "Config": {
-      "cpp": "HybridConfig"
+      "all": {
+        "language": "c++",
+        "implementationClassName": "HybridConfig"
+      }
     }
   },
   "ignorePaths": [

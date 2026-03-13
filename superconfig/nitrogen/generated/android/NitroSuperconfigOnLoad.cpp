@@ -20,25 +20,30 @@
 namespace margelo::nitro::superconfig {
 
 int initialize(JavaVM* vm) {
+  return facebook::jni::initialize(vm, []() {
+    ::margelo::nitro::superconfig::registerAllNatives();
+  });
+}
+
+
+
+void registerAllNatives() {
   using namespace margelo::nitro;
   using namespace margelo::nitro::superconfig;
-  using namespace facebook;
 
-  return facebook::jni::initialize(vm, [] {
-    // Register native JNI methods
-    
+  // Register native JNI methods
+  
 
-    // Register Nitro Hybrid Objects
-    HybridObjectRegistry::registerHybridObjectConstructor(
-      "Config",
-      []() -> std::shared_ptr<HybridObject> {
-        static_assert(std::is_default_constructible_v<HybridConfig>,
-                      "The HybridObject \"HybridConfig\" is not default-constructible! "
-                      "Create a public constructor that takes zero arguments to be able to autolink this HybridObject.");
-        return std::make_shared<HybridConfig>();
-      }
-    );
-  });
+  // Register Nitro Hybrid Objects
+  HybridObjectRegistry::registerHybridObjectConstructor(
+    "Config",
+    []() -> std::shared_ptr<HybridObject> {
+      static_assert(std::is_default_constructible_v<HybridConfig>,
+                    "The HybridObject \"HybridConfig\" is not default-constructible! "
+                    "Create a public constructor that takes zero arguments to be able to autolink this HybridObject.");
+      return std::make_shared<HybridConfig>();
+    }
+  );
 }
 
 } // namespace margelo::nitro::superconfig
