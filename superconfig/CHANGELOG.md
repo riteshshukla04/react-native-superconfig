@@ -1,5 +1,7 @@
 # Changelog
 
+# [0.16.0](https://github.com/riteshshukla04/react-native-superconfig/compare/v0.15.0...v0.16.0) (2026-03-13)
+
 # [0.15.0](https://github.com/riteshshukla04/react-native-superconfig/compare/v0.10.0...v0.15.0) (2026-02-20)
 
 
