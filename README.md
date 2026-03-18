@@ -57,7 +57,7 @@ That's it! Your config values are now accessible with native performance.
 
 > **Note**: A `superconfig.d.ts` file is auto-generated in your project root from your `.env` file, giving you full autocomplete and type checking out of the box.
 
-### Type Safety Tips:
+### Type Safety Tips (Optional):
 Since `react-native-superconfig` generates types based on your local `.env`, the initial install might not have your specific keys. We include a `postinstall` script to generate them automatically, but package managers can sometimes be flaky with these hooks.
 To ensure **100% type safety** locally and in CI, add this to your app's `package.json`:
 
