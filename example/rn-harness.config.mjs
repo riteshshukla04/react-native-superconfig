@@ -14,15 +14,17 @@ const config = {
   runners: [
     androidPlatform({
       name: 'android',
-      device: androidEmulator('Pixel_6_Pro'), // Your Android emulator name
-      bundleId: 'com.example', // Your Android bundle ID
+      device: androidEmulator('Pixel_8_API_35'), // Must match AVD_NAME in CI workflow
+      bundleId: 'com.example',
     }),
     applePlatform({
       name: 'ios',
-      device: appleSimulator('iPhone 17 Pro', '26.2'), // Your iOS simulator name and version
-      bundleId: 'org.reactjs.native.example.example', // Your iOS bundle ID
-    })
+      device: appleSimulator('iPhone 17 Pro', '26.2'),
+      bundleId: 'org.reactjs.native.example.example',
+    }),
   ],
+  defaultRunner: 'android',
+  bridgeTimeout: 180000,
 };
 
 export default config;
