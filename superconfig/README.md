@@ -121,6 +121,82 @@ import com.margelo.nitro.superconfig.NativeSuperConfig.config
 val apiUrl = config["API_URL"]
 ```
 
+## Using env vars in Info.plist & AndroidManifest.xml
+
+superconfig can inject your `.env` values into `Info.plist` (iOS) and `AndroidManifest.xml` (Android), similar to `react-native-config`. This is **opt-in** to keep your values secure by default.
+
+### Enable the feature
+
+Add this to your app's `package.json`:
+
+```json
+{
+  "superconfig": {
+    "injectBuildVars": true
+  }
+}
+```
+
+### iOS (Info.plist)
+
+**No manual setup required.** When `injectBuildVars` is enabled, superconfig generates an xcconfig file at `npm install` time and the podspec automatically injects the values as Xcode build settings via `user_target_xcconfig`. After enabling, just run:
+
+```bash
+cd ios && pod install
+```
+
+Then reference your env vars in `Info.plist` using `$(VAR_NAME)` syntax:
+
+```xml
+<key>CFBundleURLTypes</key>
+<array>
+    <dict>
+        <key>CFBundleURLSchemes</key>
+        <array>
+            <string>$(DEEP_LINK_SCHEME)</string>
+        </array>
+    </dict>
+</array>
+```
+
+> **Note:** When you change your `.env` file, you need to re-run `pod install` for iOS to pick up the new values.
+
+### Android (AndroidManifest.xml)
+
+Add the following to your app's `android/app/build.gradle` inside `defaultConfig`:
+
+```groovy
+defaultConfig {
+    // ... existing config ...
+
+    // Superconfig: inject env vars as manifest placeholders
+    def envPropsFile = file("${rootProject.projectDir}/superconfig-env.properties")
+    if (envPropsFile.exists()) {
+        def envProps = new Properties()
+        envProps.load(new FileInputStream(envPropsFile))
+        envProps.each { key, value ->
+            manifestPlaceholders[key] = value
+        }
+    }
+}
+```
+
+Then reference your env vars in `AndroidManifest.xml` using `${VAR_NAME}` syntax:
+
+```xml
+<meta-data android:name="com.myapp.API_URL" android:value="${API_URL}" />
+
+<intent-filter>
+    <data android:scheme="${DEEP_LINK_SCHEME}" />
+</intent-filter>
+```
+
+> **Important:** Add `superconfig-env.properties` and `superconfig-env.xcconfig` to your `.gitignore` — these are auto-generated files.
+
+### Security Warning
+
+When `injectBuildVars` is enabled, your env values **will be visible** in the built IPA/APK (in Info.plist and AndroidManifest.xml). Only use this for non-sensitive values like API URLs, deep link schemes, and feature flags. Sensitive secrets should remain in the default C++ binary injection (which is harder to reverse-engineer).
+
 ## Security
 
 superconfig offers **better obfuscation** than traditional approaches like `BuildConfig.java`:

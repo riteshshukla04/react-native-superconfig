@@ -84,6 +84,16 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
+
+        // Superconfig: inject env vars as manifestPlaceholders (opt-in)
+        def envPropsFile = file("${rootProject.projectDir}/superconfig-env.properties")
+        if (envPropsFile.exists()) {
+            def envProps = new Properties()
+            envProps.load(new FileInputStream(envPropsFile))
+            envProps.each { key, value ->
+                manifestPlaceholders[key] = value
+            }
+        }
     }
     signingConfigs {
         debug {

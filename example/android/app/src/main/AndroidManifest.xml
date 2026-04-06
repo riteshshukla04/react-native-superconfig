@@ -22,6 +22,14 @@
             <action android:name="android.intent.action.MAIN" />
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
+        <intent-filter>
+            <action android:name="android.intent.action.VIEW" />
+            <category android:name="android.intent.category.DEFAULT" />
+            <category android:name="android.intent.category.BROWSABLE" />
+            <data android:scheme="${DEEP_LINK_SCHEME}" />
+        </intent-filter>
       </activity>
+      <meta-data android:name="com.superconfig.API_URL" android:value="${API_URL}" />
+      <meta-data android:name="com.superconfig.APP_NAME" android:value="${APP_NAME}" />
     </application>
 </manifest>
