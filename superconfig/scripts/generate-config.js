@@ -248,9 +248,13 @@ function findAppRoot() {
         const appRoot = path.resolve(process.env.SUPERCONFIG_APP_ROOT);
         if (fs.existsSync(appRoot) && isReactNativeApp(appRoot)) {
             return { appRoot, strategy: 'environment_variable' };
-        } else {
-            console.warn(`[Superconfig] ⚠️  SUPERCONFIG_APP_ROOT set but invalid: ${appRoot}`);
         }
+        // If pointing to ios/ or android/ subdirectory, try the parent
+        const parentDir = path.dirname(appRoot);
+        if (fs.existsSync(parentDir) && isReactNativeApp(parentDir)) {
+            return { appRoot: parentDir, strategy: 'environment_variable (parent)' };
+        }
+        console.warn(`[Superconfig] ⚠️  SUPERCONFIG_APP_ROOT set but invalid: ${appRoot}`);
     }
 
     // Strategy 2: Process Working Directory Check

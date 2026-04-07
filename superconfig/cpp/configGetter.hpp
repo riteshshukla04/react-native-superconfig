@@ -45,7 +45,7 @@ inline std::unordered_map<std::string, std::string> getActualConfig() {
         {"__PRIVATE__", "secret"},
         {"_123", "numbered"},
         {"A_B_C", "value"},
-        {"APP_NAME", "SuperconfigExample"},
+        {"APP_NAME", "नमस्ते🚀"},
         {"CURRENCY", "₹"},
         {"EMOJI", "🔥"},
         {"PRIVATE_KEY", "-----BEGIN KEY-----\nline1\nline2\n-----END KEY-----"},

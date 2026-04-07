@@ -11,11 +11,11 @@ fi
 [ -z "$NODE_BINARY" ] && export NODE_BINARY="node"
 
 # Optional: Set app root from Xcode environment if available
-# This helps ensure correct .env detection in monorepo setups
+# PROJECT_DIR points to the ios/ directory, but the RN app root is its parent
 if [ -n "$PROJECT_DIR" ] && [ -z "$SUPERCONFIG_APP_ROOT" ]; then
-  export SUPERCONFIG_APP_ROOT="$PROJECT_DIR"
+  export SUPERCONFIG_APP_ROOT="$(dirname "$PROJECT_DIR")"
 elif [ -n "$SRCROOT" ] && [ -z "$SUPERCONFIG_APP_ROOT" ]; then
-  export SUPERCONFIG_APP_ROOT="$SRCROOT"
+  export SUPERCONFIG_APP_ROOT="$(dirname "$SRCROOT")"
 fi
 
 # Override the default with the global environment

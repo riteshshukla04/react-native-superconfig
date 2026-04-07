@@ -8,7 +8,7 @@ PODS:
   - hermes-engine (0.14.0):
     - hermes-engine/Pre-built (= 0.14.0)
   - hermes-engine/Pre-built (0.14.0)
-  - NativeSuperConfig (0.10.0):
+  - NativeSuperConfig (0.16.0):
     - boost
     - DoubleConversion
     - fast_float
@@ -37,7 +37,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - NitroModules (0.33.7):
+  - NitroModules (0.35.1):
     - boost
     - DoubleConversion
     - fast_float
@@ -66,7 +66,7 @@ PODS:
     - ReactCommon/turbomodule/core
     - SocketRocket
     - Yoga
-  - NitroSuperconfig (0.10.0):
+  - NitroSuperconfig (0.16.0):
     - boost
     - DoubleConversion
     - fast_float
@@ -2889,9 +2889,9 @@ SPEC CHECKSUMS:
   fmt: a40bb5bd0294ea969aaaba240a927bd33d878cdd
   glog: 5683914934d5b6e4240e497e0f4a3b42d1854183
   hermes-engine: 2fdeff540c9a6172fb19e8bee2d3df3ccb3c7846
-  NativeSuperConfig: 3962f906476e6a5b90c10cde944975fe1092d0ad
-  NitroModules: e8ec707a245a85cf1eb4289f91a9372f9590a897
-  NitroSuperconfig: 81e51ed1b659657b86eef5d78aec675d8089abdb
+  NativeSuperConfig: bda725187788fbb52099527b394862d11517ed4f
+  NitroModules: 1a83020d32c23e06c9ba0e3d78e917bb91a52703
+  NitroSuperconfig: 37fb92caebe701a27d2220e1abe3bb50ac6048e0
   RCT-Folly: 846fda9475e61ec7bcbf8a3fe81edfcaeb090669
   RCTDeprecation: a41bbdd9af30bf2e5715796b313e44ec43eefff1
   RCTRequired: 7be34aabb0b77c3cefe644528df0fa0afad4e4d0
@@ -2965,6 +2965,6 @@ SPEC CHECKSUMS:
   SocketRocket: d4aabe649be1e368d1318fdf28a022d714d65748
   Yoga: 5456bb010373068fc92221140921b09d126b116e
 
-PODFILE CHECKSUM: 7619b7510e738e00b93774ac331e7a78da5bf15d
+PODFILE CHECKSUM: 4ed19253cf2fb363489f8386536a29f4357e06ee
 
 COCOAPODS: 1.15.2
