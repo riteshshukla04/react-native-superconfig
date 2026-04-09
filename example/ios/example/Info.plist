@@ -37,6 +37,19 @@
 	<string></string>
 	<key>RCTNewArchEnabled</key>
 	<true/>
+	<key>SuperconfigAPIURL</key>
+	<string>$(API_URL)</string>
+	<key>SuperconfigAppName</key>
+	<string>$(APP_NAME)</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>$(DEEP_LINK_SCHEME)</string>
+			</array>
+		</dict>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>

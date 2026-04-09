@@ -11,6 +11,9 @@ const path = require('path');
  */
 const config = {
   watchFolders: [path.resolve(__dirname, '..')],
+  resolver: {
+    nodeModulesPaths: [path.resolve(__dirname, 'node_modules')],
+  },
 };
 
 const mergedConfig = mergeConfig(getDefaultConfig(__dirname), config);

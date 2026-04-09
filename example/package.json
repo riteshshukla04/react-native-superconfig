@@ -8,7 +8,8 @@
     "lint": "eslint .",
     "start": "react-native start",
     "pod": "pod install --project-directory=ios",
-    "test": "jest"
+    "test": "jest",
+    "test:harness": "react-native-harness"
   },
   "dependencies": {
     "@react-native/new-app-screen": "0.83.1",
@@ -40,6 +41,9 @@
     "prettier": "2.8.8",
     "react-test-renderer": "19.2.0",
     "typescript": "^5.8.3"
+  },
+  "superconfig": {
+    "injectBuildVars": true
   },
   "engines": {
     "node": ">=20"
