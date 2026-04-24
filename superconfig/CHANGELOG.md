@@ -1,5 +1,13 @@
 # Changelog
 
+# [0.17.0](https://github.com/riteshshukla04/react-native-superconfig/compare/v0.16.0...v0.17.0) (2026-04-24)
+
+
+### Features
+
+* ablity to read manifest and plist files ([b6da811](https://github.com/riteshshukla04/react-native-superconfig/commit/b6da811256b724e2661f294b600d6ffb18398ee9))
+* ablity-to-skip env ([#17](https://github.com/riteshshukla04/react-native-superconfig/issues/17)) ([b0de07a](https://github.com/riteshshukla04/react-native-superconfig/commit/b0de07a5586c6e6054aa950a6b18537482c65b07))
+
 # [0.16.0](https://github.com/riteshshukla04/react-native-superconfig/compare/v0.15.0...v0.16.0) (2026-03-13)
 
 # [0.15.0](https://github.com/riteshshukla04/react-native-superconfig/compare/v0.10.0...v0.15.0) (2026-02-20)
