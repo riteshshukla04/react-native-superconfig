@@ -331,15 +331,25 @@ console.log('  injectBuildVars:', options.injectBuildVars);
 /**
  * Robust .env parser
  */
+const SKIP_MARKER_RE = /^#\s*skip-superconfig\s*$/i;
+
 function parseEnv(content) {
     const config = {};
+    const skippedKeys = [];
     const lines = content.split(/\r?\n/);
+    let pendingSkip = false;
 
     for (let i = 0; i < lines.length; i++) {
         let line = lines[i].trim();
 
-        // Skip empty lines and full-line comments
-        if (!line || line.startsWith('#')) continue;
+        // Skip empty lines and full-line comments, but detect the skip marker.
+        // Blank lines and ordinary comments preserve a pending skip flag so the
+        // marker can sit a few lines above the key it applies to.
+        if (!line) continue;
+        if (line.startsWith('#')) {
+            if (SKIP_MARKER_RE.test(line)) pendingSkip = true;
+            continue;
+        }
 
         // Find the first equals sign
         const eqIdx = line.indexOf('=');
@@ -447,7 +457,8 @@ function parseEnv(content) {
                 }
             }
 
-            config[finalKey] = parsed;
+            if (pendingSkip) { skippedKeys.push(finalKey); pendingSkip = false; }
+            else config[finalKey] = parsed;
             i += lineOffset; // Skip processed lines
 
         } else if (value.startsWith("'")) {
@@ -479,7 +490,8 @@ function parseEnv(content) {
                     }
                 }
             }
-            config[finalKey] = parsed;
+            if (pendingSkip) { skippedKeys.push(finalKey); pendingSkip = false; }
+            else config[finalKey] = parsed;
             i += lineOffset;
 
         } else {
@@ -517,10 +529,11 @@ function parseEnv(content) {
 
             // Resolve variables ${VAR}
             // For now, let's just strip surrounding whitespace
-            config[finalKey] = cleanValue.trim();
+            if (pendingSkip) { skippedKeys.push(finalKey); pendingSkip = false; }
+            else config[finalKey] = cleanValue.trim();
         }
     }
-    return config;
+    return { config, skippedKeys };
 }
 
 function escapeForCpp(str) {
@@ -639,8 +652,11 @@ function generatePropertiesFile(config) {
 // Main execution
 if (fs.existsSync(envPath)) {
     const rawContent = fs.readFileSync(envPath, 'utf-8');
-    const config = parseEnv(rawContent);
+    const { config, skippedKeys } = parseEnv(rawContent);
     console.log(`[Superconfig] 📦 Found ${Object.keys(config).length} config entries`);
+    if (skippedKeys.length > 0) {
+        console.log(`[Superconfig] ⏭️  Skipped ${skippedKeys.length} key(s) via # skip-superconfig: ${skippedKeys.join(', ')}`);
+    }
 
     // Log keys for debugging
     // console.log(config);

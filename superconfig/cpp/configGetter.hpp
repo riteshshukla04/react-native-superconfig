@@ -54,6 +54,7 @@ inline std::unordered_map<std::string, std::string> getActualConfig() {
         {"EQUALS_IN_VALUE", "a=b=c=d"},
         {"\"UNFINISHED_QUOTE", "oops"},
         {"API_URL", "https://api.example.com"},
-        {"DEEP_LINK_SCHEME", "superconfig"}
+        {"DEEP_LINK_SCHEME", "superconfig"},
+        {"AFTER_SKIP", "included"}
     };
 }
