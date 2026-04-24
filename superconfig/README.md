@@ -53,6 +53,17 @@ console.log(Config.FEATURE_FLAG);   // "true"
 
 That's it! Your config values are now accessible with native performance.
 
+### Skipping keys (`# skip-superconfig`)
+
+If you keep values in `.env` that other tools need but superconfig should **not** bake into its generated artifacts, put `# skip-superconfig` on the line above the key:
+
+```env
+# skip-superconfig
+APP_NAME=My App
+```
+
+The next key assignment after the marker is excluded from every generated file: `configGetter.hpp`, `superconfig.d.ts`, and (when `injectBuildVars` is on) `superconfig-env.xcconfig` and `android/superconfig-env.properties`. Blank lines and regular `#` comments between the marker and the key are fine — only the next key=value line consumes the marker.
+
 ## Types
 
 > **Note**: A `superconfig.d.ts` file is auto-generated in your project root from your `.env` file, giving you full autocomplete and type checking out of the box.

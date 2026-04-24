@@ -105,6 +105,17 @@ describe('Test Env here', () => {
     expect(Config['EQUALS_IN_VALUE']).toBe('a=b=c=d');
   });
 
+  it('should skip keys marked with # skip-superconfig', () => {
+    expect(Config['SKIPPED_KEY']).toBeUndefined();
+    expect(Config['SKIPPED_QUOTED']).toBeUndefined();
+    expect(Config['SKIPPED_WITH_COMMENT']).toBeUndefined();
+  });
+
+  it('should resume normal parsing after a skipped key', () => {
+    expect(Config['AFTER_SKIP']).toBe('included');
+    expect(Config['API_URL']).toBe('https://api.example.com');
+  });
+
   it('should ignore or safely handle invalid lines', () => {
     expect(Config['']).toBeUndefined(); // from "=novalue"
     expect(Config['NO_EQUALS_LINE']).toBeUndefined();
